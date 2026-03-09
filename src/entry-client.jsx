@@ -5,8 +5,9 @@ import { BrowserRouter } from "react-router-dom";
 import { getQueryClient } from "./lib/makeQueryClient.js";
 import { QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
 
-const queryClient = getQueryClient();
+const queryClient = await getQueryClient();
 const dehydratedState = window.__REACT_QUERY_STATE__;
+
 hydrateRoot(
   document.getElementById("root"),
   <StrictMode>

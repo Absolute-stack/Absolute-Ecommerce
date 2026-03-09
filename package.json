@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.jsx",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.21",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/node": "^25.4.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
