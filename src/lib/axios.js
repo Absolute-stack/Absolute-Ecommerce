@@ -20,6 +20,7 @@ function processQueue(error, token = null) {
       prom.resolve(token);
     }
   });
+  failedQueue = [];
 }
 
 api.interceptors.request.use(
@@ -39,7 +40,7 @@ async function silentRefresh() {
   });
   const newToken = response.data.accessToken;
 
-  const { useStore } = import("../store/store.js");
+  const { useStore } = await import("../store/store.js");
   const user = useStore.getState().auth.user;
   if (user) {
     useStore.getState().auth.user = newToken;
@@ -53,10 +54,10 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     const tokenExpired =
-      error.response?.status === "404" &&
+      error.response?.status === 401 &&
       error.response.data.message === "token expired";
 
-    if (tokenExpired || !originalRequest._retry) {
+    if (!tokenExpired || !originalRequest._retry) {
       return Promise.reject(error);
     }
 
@@ -73,12 +74,12 @@ api.interceptors.response.use(
     isRefreshing = true;
     originalRequest._retry = 1;
     try {
-      const newToken = silentRefresh();
+      const newToken = await silentRefresh();
 
       window.__AUTH_TOKEN__ = newToken;
       processQueue(null, newToken);
 
-      originalRequest.headers.Authorization = `Bearer ${token}`;
+      originalRequest.headers.Authorization = `Bearer ${newToken}`;
       return api(originalRequest);
     } catch (refreshError) {
       processQueue(refreshError, null);
