@@ -7,12 +7,40 @@ import {
   register,
   refresh,
   logout,
+  createAccessToken,
+  createRefreshToken,
+  sendRefreshToken,
 } from "../controllers/authController.js";
+import passport from "../middleware/passport.js";
 
 export const authRouter = express.Router();
 
-authRouter.post("/register", upload.array("images", 1), register);
+authRouter.post("/register", upload.single("image"), register);
 authRouter.post("/refresh", refresh);
 authRouter.delete("/logout", logout);
 authRouter.post("/login", login);
 authRouter.get("/getMe", protect, getMe);
+
+authRouter.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  }),
+);
+
+authRouter.get(
+  "/google/callback",
+  passport.authenticate(
+    "google",
+    { failedRedirect: "/login", session: false },
+    async (req, res) => {
+      const user = req.user;
+      const accessToken = createAccessToken(user);
+      const refreshToken = createRefreshToken(user);
+      user.refreshToken = refreshToken;
+      await user.save({ validateBeforeSave: false });
+      res.redirect(`${process.env}`);
+    },
+  ),
+);

@@ -6,7 +6,7 @@ import { deleteCloudinaryImages } from "../middleware/multer.js";
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
-function createAccessToken(user) {
+export function createAccessToken(user) {
   return jwt.sign(
     {
       id: user._id,
@@ -19,7 +19,7 @@ function createAccessToken(user) {
   );
 }
 
-function createRefreshToken(user) {
+export function createRefreshToken(user) {
   return jwt.sign(
     {
       id: user._id,
@@ -29,7 +29,7 @@ function createRefreshToken(user) {
   );
 }
 
-function sendRefreshToken(res, token) {
+export function sendRefreshToken(res, token) {
   res.cookie("refreshToken", token, {
     httpOnly: true,
     secure: false,
@@ -105,7 +105,7 @@ export async function login(req, res) {
     const refreshToken = createRefreshToken(user);
 
     user.refreshToken = refreshToken;
-    await User.save({ validateBeforeSave: false });
+    await user.save({ validateBeforeSave: false });
     sendRefreshToken(res, refreshToken);
 
     return res.status(200).json({

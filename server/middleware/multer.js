@@ -1,7 +1,10 @@
 import multer from "multer";
-import cloudinary from "cloudinary";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const cloudinaryStorage = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary"); // ← full module, not v2
 
+// Configure it
 import "dotenv/config";
 cloudinary.v2.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -9,35 +12,30 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary.v2,
-  params: {
-    folder: "abEcommerce/images",
-    allowedFormat: ["jpg", "jpeg", "png", "webp", "avif"],
-    transformation: [
-      { width: 800, height: 800, crop: "limit" },
-      { fetch_format: "auto" },
-      { quality: "auto" },
-    ],
-  },
+const storage = cloudinaryStorage({
+  cloudinary: cloudinary, // ← pass full module so .v2 is accessible
+  folder: "absoluteEcommerce/images",
+  allowedFormats: ["jpg", "jpeg", "png", "webp", "avif"],
+  transformation: [
+    { width: 800, height: 800, crop: "limit" },
+    { quality: "auto", fetch_format: "auto" },
+  ],
 });
 
 export const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter(req, file, cb) {
-    const allowedMimeTypes = [
-      "image/jpg",
+  fileFilter: (req, file, cb) => {
+    const ALLOWED_MIME_TYPES = [
       "image/jpeg",
       "image/png",
       "image/webp",
       "image/avif",
     ];
-
-    if (allowedMimeTypes.includes(file.mimetype)) {
+    if (ALLOWED_MIME_TYPES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error("Invalid file type. Only JPEG,JPG,PNG,WEBP,AVIF"));
+      cb(new Error(`Unsupported file type: ${file.mimetype}`), false);
     }
   },
 });
