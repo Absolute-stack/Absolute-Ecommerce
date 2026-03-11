@@ -40,7 +40,7 @@ authRouter.get(
       const refreshToken = createRefreshToken(user);
       user.refreshToken = refreshToken;
       await user.save({ validateBeforeSave: false });
-      res.redirect(`${process.env}`);
+      res.redirect(`${process.env.CLIENT_URL}/oauth?token=${accessToken}`);
     },
   ),
 );
