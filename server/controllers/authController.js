@@ -149,7 +149,7 @@ export async function refresh(req, res) {
       });
       return res.status(400).json({
         success: false,
-        messaege: "Token expired",
+        message: "Token expired",
       });
     }
 

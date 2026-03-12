@@ -1,6 +1,7 @@
+import "dotenv/config";
 import mongoose from "mongoose";
 
-export async function connectDB() {
+export async function connectDB(req, res) {
   try {
     mongoose.connection.on("connected", () =>
       console.log(`Connected to mongoDB successfully`),

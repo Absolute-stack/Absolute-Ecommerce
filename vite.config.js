@@ -13,6 +13,9 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: false,
+    rollupOptions: {
+      external: ["dotenv"], // ✅ add this
+    },
   },
   ssr: {
     noExternal: ["react-router-dom"],

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 export async function protect(req, res, next) {
   try {
-    const authHeader = req.heaaders.authorization;
+    const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer "))
       return res.status(400).json({
         success: false,
@@ -18,7 +18,7 @@ export async function protect(req, res, next) {
       req.user = decoded;
       next();
     } catch (error) {
-      console.error(error);
+      return res.status(401).json({ success: false, message: "token expired" });
     }
   } catch (error) {
     console.error(error);
@@ -59,6 +59,8 @@ export async function optionalAuth(req, res, next) {
       next();
     } catch (error) {
       console.error(error);
+      req.user = null;
+      return next();
     }
   } catch (error) {
     console.error(error);

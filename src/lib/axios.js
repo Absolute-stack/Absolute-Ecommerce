@@ -1,4 +1,3 @@
-import "dotenv/config";
 import axios from "axios";
 import { getQueryClient } from "./makeQueryClient.js";
 
@@ -72,7 +71,7 @@ api.interceptors.response.use(
         .catch((err) => Promise.reject(err));
     }
     isRefreshing = true;
-    originalRequest._retry = 1;
+    originalRequest._retry = true;
     try {
       const newToken = await silentRefresh();
 
@@ -85,7 +84,7 @@ api.interceptors.response.use(
       processQueue(refreshError, null);
       window.__AUTH_TOKEN__ = null;
 
-      const { useStore } = import("../store/store.js");
+      const { useStore } = await import("../store/store.js");
       useStore.getState().clearAuth();
       getQueryClient().clear();
       return Promise.reject(refreshError);

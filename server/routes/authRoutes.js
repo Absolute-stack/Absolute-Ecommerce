@@ -16,7 +16,7 @@ import passport from "../middleware/passport.js";
 export const authRouter = express.Router();
 
 authRouter.post("/register", upload.single("image"), register);
-authRouter.post("/refresh", refresh);
+authRouter.get("/refresh", refresh);
 authRouter.delete("/logout", logout);
 authRouter.post("/login", login);
 authRouter.get("/getMe", protect, getMe);
@@ -31,16 +31,16 @@ authRouter.get(
 
 authRouter.get(
   "/google/callback",
-  passport.authenticate(
-    "google",
-    { failedRedirect: "/login", session: false },
-    async (req, res) => {
-      const user = req.user;
-      const accessToken = createAccessToken(user);
-      const refreshToken = createRefreshToken(user);
-      user.refreshToken = refreshToken;
-      await user.save({ validateBeforeSave: false });
-      res.redirect(`${process.env.CLIENT_URL}/oauth?token=${accessToken}`);
-    },
-  ),
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    session: false,
+  }),
+  async (req, res) => {
+    const user = req.user;
+    const accessToken = createAccessToken(user);
+    const refreshToken = createRefreshToken(user);
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+    res.redirect(`${process.env.API_URL}/oauth?token=${accessToken}`);
+  },
 );

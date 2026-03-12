@@ -40,6 +40,7 @@
     "@types/node": "^25.4.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/react-query": "^1.2.8",
     "@vitejs/plugin-react": "^5.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.1",
