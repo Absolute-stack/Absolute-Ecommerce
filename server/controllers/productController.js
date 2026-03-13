@@ -181,7 +181,7 @@ export async function getProducts(req, res) {
     }
     if (search) filter.name = { $regex: search, $options: "i" };
     function castCursor(cursor) {
-      if (sortBy === price || sortBy === stock) return Number(cursor);
+      if (sortBy === "price" || sortBy === "stock") return Number(cursor);
       if (sortBy === "createdAt" || sortBy === "updatedAt")
         return new Date(cursor);
       return cursor;

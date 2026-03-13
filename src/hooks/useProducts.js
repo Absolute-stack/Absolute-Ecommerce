@@ -35,7 +35,7 @@ export function useProduct(id) {
   });
 }
 
-export function relatedProducts(category, currentId) {
+export function useRelatedProducts(category, currentId) {
   const selectFn = useMemo(
     () => (data) => ({
       ...data,

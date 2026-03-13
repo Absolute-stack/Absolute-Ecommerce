@@ -3,7 +3,7 @@ import CompoundProductCard from "./CompoundProductCard.jsx";
 
 export default function ProductCard({ product }) {
   return (
-    <Link to={`/products/${product._id}`}>
+    <Link className="product-card" to={`/products/${product._id}`}>
       <CompoundProductCard>
         <CompoundProductCard.cardLayout>
           <CompoundProductCard.cardImage src={product.images?.[0]} />

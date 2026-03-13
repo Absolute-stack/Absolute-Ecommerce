@@ -1,5 +1,5 @@
 export default function CompoundProductCard({ children }) {
-  return <div>{children}</div>;
+  return <div className="card">{children}</div>;
 }
 
 function CardLayout({ children }) {
@@ -25,7 +25,7 @@ function CardTitle({ children }) {
 }
 
 function CardPrice({ children }) {
-  return <div className="card-price">{children}</div>;
+  return <div className="card-price">GH₵{children}</div>;
 }
 
 function CardCategory({ children }) {

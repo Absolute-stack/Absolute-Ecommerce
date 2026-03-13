@@ -1,0 +1,94 @@
+.nav {
+  padding: 1rem;
+  color: rgb(91, 86, 86);
+  background-color: white;
+}
+
+.nav .container {
+  display: flex;
+  max-width: 90rem;
+  margin-inline: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-left h2 {
+  color: black;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-container img {
+  width: 30px;
+  height: 30px;
+}
+
+.ul-link-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ul-link-container li {
+  cursor: pointer;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.searchbar-container {
+  width: 300px;
+}
+
+.searchbar-container input {
+  width: 100%;
+  padding: 0.5rem;
+  line-height: 0.5rem;
+  border-radius: 200px;
+  background-color: rgba(95, 158, 160, 0.096);
+}
+
+.searchbar-container input::placeholder {
+  font-size: 0.9rem;
+}
+
+.icons-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.icons-container img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.bag-container {
+  position: relative;
+}
+
+.bag-number {
+  position: absolute;
+  top: -2px;
+  right: -5px;
+  color: white;
+  font-weight: 800;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  padding: 0.05rem 0.3rem;
+  background-color: cadetblue;
+}
