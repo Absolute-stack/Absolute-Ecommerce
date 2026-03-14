@@ -276,3 +276,16 @@ export async function getProductById(req, res) {
     });
   }
 }
+
+export async function checkAndDeactivate(productId) {
+  const product = await Product.findById(productId);
+  if (!product) throw new Error("Product not found");
+
+  if (product && product.stock <= 0) {
+    await Product.findByIdAndUpdate(
+      productId,
+      { isActive: false },
+      { new: true },
+    );
+  }
+}

@@ -41,6 +41,7 @@ authRouter.get(
     const refreshToken = createRefreshToken(user);
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
+    sendRefreshToken(res, refreshToken);
     res.redirect(`${process.env.API_URL}/oauth?token=${accessToken}`);
   },
 );
