@@ -246,7 +246,7 @@ export async function markOrderAsPaid(reference) {
   const order = await Order.findOne({ paystackReference: reference });
   if (!order) throw new Error("Order not found");
   await Order.findOneAndUpdate(
-    { reference },
+    { paystackReference: reference },
     { paymentStatus: "paid" },
     { new: true },
   );

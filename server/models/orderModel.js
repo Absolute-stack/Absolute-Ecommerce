@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema({
   product: {
-    types: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
     required: true,
   },
@@ -46,7 +46,7 @@ const orderSchema = new mongoose.Schema(
     deliveryStatus: {
       type: String,
       enum: ["processing", "shipped", "delivered", "refunded"],
-      default: "refunded",
+      default: "processing",
     },
     paystackReference: {
       type: String,

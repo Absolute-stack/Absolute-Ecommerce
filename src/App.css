@@ -17,7 +17,9 @@ a {
 }
 
 button {
+  border: none;
   cursor: pointer;
+  background-color: transparent;
 }
 
 input,
@@ -49,6 +51,41 @@ input[type="number"] {
   gap: 0.5rem;
   display: flex;
   align-items: center;
+}
+.flex-sb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bold {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: black;
+}
+
+.sub {
+  font-weight: 800;
+  color: lightslategray;
+  text-transform: uppercase;
+}
+
+.link {
+  color: white;
+  font-weight: 800;
+  padding: 0.6rem 2rem;
+  border-radius: 0.5rem;
+  margin-inline-end: 2rem;
+  margin-block-start: 1rem;
+  background-color: cadetblue;
+  transition: 0.3s ease;
+}
+
+.link:where(:hover, :focus) {
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  transform: translateY(-2px);
 }
 
 body {

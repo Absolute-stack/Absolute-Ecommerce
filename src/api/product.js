@@ -2,9 +2,9 @@ import { api } from "../lib/axios.js";
 
 function getApi() {
   if (typeof window === "undefined") {
-    return process.env.API_URL;
+    return "http://localhost:8000"; // server → direct
   } else {
-    return import.meta.env.VITE_API_URL;
+    return import.meta.env.VITE_API_URL; // browser → Ngrok
   }
 }
 
@@ -16,19 +16,31 @@ export async function fetchProducts(filters = {}, pageParam = null) {
   if (filters.search) params.set("search", filters.search);
   if (filters.minPrice) params.set("minPrice", filters.minPrice);
   if (filters.maxPrice) params.set("maxPrice", filters.maxPrice);
-  const res = await fetch(`${getApi()}/api/product/all?${params}`);
+  const res = await fetch(`${getApi()}/api/product/all?${params}`, {
+    headers: {
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
   if (!res.ok) throw new Error("Fetching products error");
   return res.json();
 }
 
 export async function fetchProductFilters() {
-  const res = await fetch(`${getApi()}/api/product/product-filters`);
+  const res = await fetch(`${getApi()}/api/product/product-filters`, {
+    headers: {
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
   if (!res.ok) throw new Error("Failed to fetch product filters");
   return res.json();
 }
 
 export async function fetchProductById(id) {
-  const res = await fetch(`${getApi()}/api/product/${id}`);
+  const res = await fetch(`${getApi()}/api/product/${id}`, {
+    headers: {
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
   if (!res.ok) throw new Error("Failed to fetch product");
   return res.json();
 }

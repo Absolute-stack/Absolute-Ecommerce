@@ -10,11 +10,12 @@ export function FilterSideBar({ filters = {}, onChange }) {
   }
 
   if (isPending) return <div>Loading...</div>;
+  if (!data) return null;
 
   return (
     <aside className="filter-side">
       <h2>Categories</h2>
-      {data.categories.map((cat) => {
+      {data?.categories.map((cat) => {
         return (
           <label key={cat} className="flex">
             <input

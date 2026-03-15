@@ -1,4 +1,6 @@
 import "./Navbar.css";
+import { Link } from "react-router-dom";
+import { useCart } from "../../hooks/useCart.js";
 import bag_icon from "../../assets/images/bag.svg";
 import { useState, useEffect, useRef } from "react";
 import heart_icon from "../../assets/images/love.svg";
@@ -8,7 +10,7 @@ import profile_icon from "../../assets/images/Profile.svg";
 export default function Navbar({ filters = {}, onChange }) {
   const [searchInput, setSearchInput] = useState(filters.search || "");
   const firstRender = useRef(true);
-
+  const { totalQuantity } = useCart();
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
@@ -66,7 +68,7 @@ export default function Navbar({ filters = {}, onChange }) {
               fetchPriority="high"
               decoding="async"
             />
-            <div className="bag-container">
+            <Link to="/cart" className="bag-container">
               <img
                 src={bag_icon}
                 alt={bag_icon}
@@ -74,8 +76,8 @@ export default function Navbar({ filters = {}, onChange }) {
                 fetchPriority="high"
                 decoding="async"
               />
-              <div className="bag-number">3</div>
-            </div>
+              <div className="bag-number">{totalQuantity}</div>
+            </Link>
             <img
               src={profile_icon}
               alt={profile_icon}

@@ -83,7 +83,7 @@ export async function payStackWebhook(req, res) {
         message: "Invalid Signature",
       });
 
-    const event = req.body;
+    const event = JSON.parse(req.body.toString());
     if (event.event === "charge.success") {
       const { reference } = event.data;
 
@@ -124,12 +124,6 @@ export async function verifyPayment(req, res) {
       return res.status(400).json({
         success: false,
         message: "Order not found",
-      });
-
-    if (order.paymentStatus !== "paid")
-      return res.status(400).json({
-        success: false,
-        message: "Order not paid",
       });
 
     return res.status(200).json({
