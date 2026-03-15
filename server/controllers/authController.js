@@ -167,8 +167,6 @@ export async function refresh(req, res) {
 
     user.refreshToken = newRefreshToken;
     await user.save({ validateBeforeSave: false });
-
-    sendRefreshToken(res, newRefreshToken);
     return res.status(200).json({ success: true, accessToken: newAccessToken });
   } catch (error) {
     console.error(error);
