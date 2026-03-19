@@ -25,7 +25,7 @@ app.use(
   }),
 );
 
-app.use(
+app.post(
   "/api/paystack/webhook",
   express.raw({ type: "application/json" }),
   payStackWebhook,

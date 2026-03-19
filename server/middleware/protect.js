@@ -59,8 +59,10 @@ export async function optionalAuth(req, res, next) {
       next();
     } catch (error) {
       console.error(error);
-      req.user = null;
-      return next();
+      return res.status(401).json({
+        success: false,
+        message: "token expired",
+      });
     }
   } catch (error) {
     console.error(error);
